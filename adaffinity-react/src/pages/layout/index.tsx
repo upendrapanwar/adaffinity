@@ -4,5 +4,5 @@ type layoutProps = {
 }
 
 export const Layout = ({ children }: layoutProps) => {
-  return <div className="main-container">{children}</div>;
+  return <div>{children}</div>;
 };

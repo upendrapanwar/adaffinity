@@ -1,0 +1,53 @@
+/* Desktop-specific styles */
+@media (min-width: 992px) {
+    .cta_section .btn.btn-md {
+        margin-top: 40px;
+        /* Add margin-top for desktop */
+    }
+}
+
+
+/* Large Mobile :480px. */
+@media only screen and (max-width: 767px) {
+    .section-row {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .navbar .navbar-nav .nav-item {
+        margin: 4px 0px;
+        position: relative;
+        width: 100%;
+    }
+
+    .navbar .navbar-nav .nav-item a {
+        display: block;
+    }
+
+    .about-info {
+        padding: 0px 0px 0px 0px;
+    }
+
+    .cta_section .cta_panels .aboutPic {
+        height: 300px;
+    }
+
+    .footer-section .footer-info {
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #474747;
+    }
+
+    .footer-info ul li {
+        width: 100%;
+        /* Full-width items on smaller screens */
+    }
+
+    .signup-section .signup-card {
+        padding: 35px 15px !important;
+    }
+
+    .signup-section .signup-container {
+        flex-direction: column;
+    }
+}
