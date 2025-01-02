@@ -17,7 +17,7 @@ const Professional: React.FC = () => {
               </div>
               <div className="col-lg-6 col-12 no-gutters">
                 <div className="aboutPic">
-                  <img src={ctaPic} alt="" />
+                  <img className="inline" src={ctaPic} alt="" />
                 </div>
               </div>
 

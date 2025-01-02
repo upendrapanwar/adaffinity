@@ -7,7 +7,7 @@ const FooterLogo: React.FC = async () => {
     return (
         <div className="col-lg-12 col-md-12 col-sm-12 py-3 text-center">
             <Link to={"/"}>
-                <img src={footLogo} alt="Logo" />
+                <img className="inline" src={footLogo} alt="Logo" />
             </Link>
         </div>
 
