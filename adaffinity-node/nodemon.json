@@ -1,7 +1,20 @@
 {
     "env": {
+        "APP_ENV": "local",
+        "LOCAL_PORT":  "7700",
+        "LOCAL_URL": "http://localhost:3000",
+        "DEV_URL": "http://localhost:7700",
+        "UPLOAD_DIR": "uploads",
+        "REACT_DEV_URL":"",
+        "NODE_DEV_URL":"",
         "MONGO_USER": "georgeadaffinity",
         "MONGO_PASSWORD": "Zpa5OqxeqjtGzZBe",
-        "MONGO_DB": "adaffinity"
+        "MONGO_DB": "adaffinity",
+        "CONNECTION_STRING": "mongodb+srv://georgeadaffinity:Zpa5OqxeqjtGzZBe@adaffinity.7wmfx.mongodb.net/adaffinity?retryWrites=true&w=majority&appName=AdAffinity",
+        "ADMIN_EMAIL": "georgeadaffinity@gmail.com",
+        "EMAIL_SERVICE": "gmail",
+        "EMAIL_USER": "georgeadaffinity@gmail.com",
+        "EMAIL_PASSWORD" : "Devuser#123",
+        "SECRET" : "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTczNTg5OTY5NCwiaWF0IjoxNzM1ODk5Njk0fQ.J_7pcN_91kBykQ2wCchN91w0B3V8NLOex_zZGKnoxDQ" 
     }
 }

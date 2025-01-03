@@ -5,16 +5,22 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "concurrently \"tsc -w\" \"nodemon dist/js/app.js\""
+    "start": "concurrently \"tsc -w\" \"nodemon server.ts\""
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "express": "^4.21.2",
-    "mongoose": "^8.9.3"
+    "express-jwt": "^8.5.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.3",
+    "mongoose-paginate-v2": "^1.8.5",
+    "nodemailer": "^6.9.16",
+    "nodemailer-express-handlebars": "^7.0.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
