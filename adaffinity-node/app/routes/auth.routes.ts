@@ -3,9 +3,10 @@ import {
     register
 } from '../controllers/auth.controller';
 
-const router = express.Router();
+const auth = express.Router();
 
 // Define routes
-router.post('/signup', register);
+auth.post('/signup', register);
 
-export default router;
+
+export default auth;

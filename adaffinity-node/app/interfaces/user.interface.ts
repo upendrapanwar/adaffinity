@@ -18,4 +18,7 @@ export interface UserParams {
         code_valid_at: Date,
         is_pass_req: boolean,
     }
+    createdAt?: Date;
+    updatedAt?: Date;
+    __v?: number;
 }

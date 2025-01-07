@@ -1,39 +1,46 @@
-const { expressjwt: jwtt } = require('express-jwt');
-const userService = require('../services/user.service'); // Assuming you have a method to get the user by id
+import { expressjwt as jwtMiddleware } from 'express-jwt';
+import authService from '../services/auth.service'; // Assuming this service exists and is typed
+import { Request } from 'express'; // Import Express types for better type safety
 
-module.exports = jwt;
-
-function jwt() {
+export default function jwt() {
     const secret = process.env.SECRET;
 
-    return jwtt({ secret, isRevoked, algorithms: ['HS256'] }).unless({
+    if (!secret) {
+        throw new Error('JWT secret is not defined in environment variables.');
+    }
+
+    return jwtMiddleware({
+        secret,
+        isRevoked,
+        algorithms: ['HS256'],
+    }).unless({
         path: [
-            '/auth/signin',
-        ]
+            '/auth/signin', // Define paths that don't require authentication
+        ],
     });
 }
 
-async function isRevoked(req, payload) {
+// Function to check if the token should be revoked
+async function isRevoked(req: Request, payload: any): Promise<boolean> {
     try {
-        console.log(req); // For debugging purposes
         const url = req.originalUrl;
-        
-        // If the URL includes 'user/', you want to check the user status
+
+        // Check if the URL includes 'auth/' for specific logic
         if (url.includes('auth/')) {
-            let param = { id: payload.id, role: ["advertisor", "creator"] }; 
+            const params = { id: payload.id, role: ['advertisor', 'creator'] };
 
-            // Query the user service to get the user based on the id and role
-            const user = await userService.getUserById(param.id); // This is an example; adjust as per your actual method
+            // Fetch the user by ID
+            const user = await authService.getUserById(params.id);
 
-            // Check if the user exists and if their role matches
-            if (!user || !param.role.includes(user.role)) {
-                return true; // Token is revoked, return true
+            // Validate the user's existence and role
+            if (!user || !params.role.includes(user.role)) {
+                return true; // Revoke the token
             }
         }
 
-        return false; // Token is not revoked, return false
+        return false; // Token is valid
     } catch (error) {
-        console.error("Error checking token revocation:", error);
-        return true; // If an error occurs, assume token should be revoked
+        console.error('Error checking token revocation:', error);
+        return true; // Assume token should be revoked on error
     }
 }

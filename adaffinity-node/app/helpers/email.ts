@@ -1,47 +1,46 @@
 import nodemailer from 'nodemailer';
 import path from 'path';
+import expressHandlebars from 'express-handlebars';
 
-let handlebars;
-(async () => {
-    const { default: hbs } = await import("nodemailer-express-handlebars");
-    handlebars = hbs; // Store the handlebars module for later use
-})();
+const handlebars = require('nodemailer-express-handlebars');
 
+// Initialize the transporter with Nodemailer
 const transporter = nodemailer.createTransport({
-    service: process.env.EMAIL_SERVICE, 
+    service: process.env.EMAIL_SERVICE,
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD  
-    }
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+    },
 });
 
-// Set up Handlebars options
-const handlebarOptions = {
-    viewEngine: {
-        partialsDir: path.resolve("./app/emailTemplates/"), // Path to email templates
-        defaultLayout: false, // No default layout
-    },
-    viewPath: path.resolve("./app/emailTemplates/"), // Path to email templates
+// Configure Handlebars options
+const handlebarOptions: any = {
+    viewEngine: expressHandlebars.create({
+        // Correct configuration for the Handlebars engine
+        layoutsDir: path.resolve("./app/email-templates/layouts/"),
+        partialsDir: path.resolve("./app/email-templates/partials/"),
+        defaultLayout: 'main',  // Define a default layout if necessary
+        extname: '.hbs',  // Optional: Define file extension for templates
+    }),
+    viewPath: path.resolve("./app/email-templates/"),
+    extName: '.hbs', // Optional: Specify the extension
 };
-const sendEmail = async (emailData) => {
+
+// Apply Handlebars to the transporter
+transporter.use('compile', handlebars(handlebarOptions));
+
+const sendEmail = async (emailData: any) => {
     const { from, replyTo, to, subject } = emailData;
     const { emailTemplate, title, firstName, message, ticketUrl, copyrightDate, filename, path: attachmentPath } = emailData.data;
 
     try {
-        if (!handlebars) {
-            throw new Error("Handlebars module is not loaded yet.");
-        }
-
-        // Dynamically load Handlebars for the current transporter
-        transporter.use("compile", handlebars(handlebarOptions));
-
         // Construct mail options
         const mailOptions = {
             from: from,
             replyTo: replyTo,
             to: to,
             subject: subject,
-            template: emailTemplate, // Handlebars template to use
+            template: emailTemplate,
             context: {
                 title: title,
                 name: firstName,
@@ -52,23 +51,18 @@ const sendEmail = async (emailData) => {
             attachments: filename && attachmentPath ? [{
                 filename: filename,
                 path: attachmentPath,
-            }] : [], 
-            // Optional: If you have plain text or HTML content, uncomment the next lines
-            // text: text,
-            // html: html,
+            }] : [],
         };
 
         // Send email using transporter
         const info = await transporter.sendMail(mailOptions);
 
-        // Log success and return response
         console.log("Email sent: " + info.response);
         return info.response;
     } catch (error) {
         console.error("Error sending email:", error);
-        throw error; // Propagate the error for handling at a higher level
+        throw error;
     }
 };
 
-module.exports = sendEmail;
-  
+export default sendEmail;

@@ -2,14 +2,15 @@ import { Request, Response, NextFunction } from 'express';
 import authservice from '../services/auth.service';
 import { UserParams } from '../interfaces/user.interface';
 import msg from '../helpers/messages.json';
-export const register = async (req: Request, res: Response, next: NextFunction) => {
+
+export const register = async (req: Request<UserParams>, res: Response, next: NextFunction): Promise<any> => {
     try {
         const { email } = req.body;
     
         // Example validation error
         if (!email) {
           const error: any = new Error('Email is required');
-          error.status = 400; // Bad Request
+          error.status = 400; 
           throw error;
         }
     

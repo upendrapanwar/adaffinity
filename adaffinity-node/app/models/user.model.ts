@@ -21,6 +21,9 @@ interface User extends Document {
         code_valid_at: Date,
         is_pass_req: boolean,
     }
+    createdAt: Date,
+    updatedAt: Date,
+    __v: number
 }
 
 const userSchema: Schema = new Schema({
@@ -39,10 +42,13 @@ const userSchema: Schema = new Schema({
     isActive: { type: Boolean, required: false, default: true },
     password: { type: String, required: false, default: '' },
     reset_password: {
-    verif_code: { type: String, required: false, default: null },
-    code_valid_at: { type: Date, required: false, default: null },
-    is_pass_req: { type: Boolean, required: false, default: false },
-}
+        verif_code: { type: String, required: false, default: null },
+        code_valid_at: { type: Date, required: false, default: null },
+        is_pass_req: { type: Boolean, required: false, default: false },
+    },
+    createdAt: { type: Date, required: false, default: Date.now },
+    updatedAt: { type: Date, required: false, default: Date.now },
+    __v: { type: Number, required: false, default: '' }
     
 }, {
     timestamps: true

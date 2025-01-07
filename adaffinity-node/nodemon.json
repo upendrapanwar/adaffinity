@@ -1,6 +1,7 @@
 {
     "env": {
         "APP_ENV": "local",
+        "PORT" : "7700",
         "LOCAL_PORT":  "7700",
         "LOCAL_URL": "http://localhost:3000",
         "DEV_URL": "http://localhost:7700",

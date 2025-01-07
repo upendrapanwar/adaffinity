@@ -10,6 +10,7 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { UserParams } from '../interfaces/user.interface';
+import SendEmail from '../helpers/email';
 
 import {
     User
@@ -27,20 +28,19 @@ async function createAccount(param:any) {
             throw 'email "' + param.email + '" is already taken';
         }
         const user = new User({
-            first_name: param.firstName,
-            last_name: param.lastName,
+            first_name: param.first_name,
+            last_name: param.last_name,
             email: param.email,
             password: bcrypt.hashSync(param.password, 10),
             role: param.role,
-            phone: param.phone_number,
-            gender: param.gender,
-            isActive: true,
-            is_blocked: false,
+            isActive: false,
           });
 
           const data = await user.save();
           const authData = await authenticate({ email: param.email, password: param.password })
           if (data) {
+            sendWellcomeEmail(param);
+            
             let res = await User.findById(data.id).select(
               "-password -social_accounts -reset_password -image_url"
             );
@@ -50,7 +50,7 @@ async function createAccount(param:any) {
                 data: data,
                 authData: {
                   token: authData.token,
-                  expTime: authData.expTime
+                  expTime: authData.expTimeTimestamp 
                 }
               };
               //sendMail(mailOptions);
@@ -118,3 +118,37 @@ async function authenticate({ email, password }:{email: string, password: string
   
   /*****************************************************************************************/
   /*****************************************************************************************/
+
+  async function sendWellcomeEmail(param:any) {
+    try {
+    const verifyEmailUrl: string | number = (process.env.LOCAL_URL || "http://localhost:3000") + "/verify-email";
+    const customData = {
+      title: 'Welcome Email',
+      emailTemplate: 'welcomeEmail',
+      firstName: param.body.first_name,
+      lastname: param.body.last_name,
+      verificationUrl: verifyEmailUrl,
+      copyrightDate: new Date().getFullYear()
+      
+    }
+    const mailOptions = {
+      from: `"Adaffinity" <${process.env.ADMIN_EMAIL}>`,
+      replyTo: `"Booking App Live" <${process.env.ADMIN_EMAIL}>`,
+      to: `"Adaffinity" <${param.body.email}>`,
+      subject: 'Welcome to Adaffinity!',
+      html: '',
+      data: customData
+    };
+    
+      const emailResult = await SendEmail(mailOptions);
+      if(emailResult) {
+        console.log("Wellcome email sent successfully");
+      } else {
+        console.log("Failed to send wellcome email");
+      }
+      //return { success: true, message: "Wellcome email sent successfully" };
+    } catch (error) {
+      console.error("Error sending wellcome email:", error);
+      //return { success: false, message: "Failed to send wellcome email" };
+    }
+  }
