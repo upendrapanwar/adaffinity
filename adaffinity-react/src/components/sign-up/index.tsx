@@ -39,7 +39,7 @@ const SignUp: React.FC = () => {
             if (response.data.status) {
                 toast.success(response.data.message, { autoClose: 3000 });
                 resetForm();
-                navigate("/login");
+                navigate("/sign-in");
             }
         }).catch(error => {
             toast.dismiss();
