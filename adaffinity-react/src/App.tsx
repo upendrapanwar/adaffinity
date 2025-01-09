@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './assets/styles/responsive.css';
 import './assets/styles/style.css';
 import 'font-awesome/css/font-awesome.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import AboutUs from './pages/static-pages/about-us';
 import Faqs from './pages/static-pages/faqs';
 import PrivacyPolicy from './pages/static-pages/privacy-policy';
@@ -17,6 +18,7 @@ import SignIn from './components/sign-in';
 import SignUp from './components/sign-up';
 import CreatorsDashboard from './pages/creators/creators-dashboard';
 import Middlewares from './middlewares/auth';
+import { ToastContainer } from 'react-toastify';
 
 const Home = lazy(() => import('./pages/home-page'));
 const Videos = lazy(() => import('./pages/videos'));
@@ -26,6 +28,7 @@ const Videos = lazy(() => import('./pages/videos'));
 function App() {
   return (
     <>
+    <ToastContainer />
     <Routes>
       <Route path="/*" element= {
         <Suspense fallback={<Loader />}>
