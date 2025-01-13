@@ -6,7 +6,7 @@ import GoogleIcon32 from "../icons/GoogleIcon";
 import FacebookIcon32 from "../icons/FacebookIcon32";
 import loginImd from "../../assets/images/login-img.jpg";
 import { toast } from "react-toastify";
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import { Login } from "../../types/login.interface";
 import userLoginSchema from "../../validation-schemas/userLoginSchema";
 import axios from "axios";
@@ -27,7 +27,7 @@ const SignIn: React.FC = () => {
      * Handle after form submission
      * 
      */
-    const handleSubmit = (values: Login, { resetForm }: { resetForm: (nextState?: Partial<Login>) => void }) => {
+    const handleSubmit = (values: Login, { resetForm }: FormikHelpers<Login>) : void => {
         //navigate("/login");
         axios.post('auth/signin', values).then((response) => {
             toast.dismiss();

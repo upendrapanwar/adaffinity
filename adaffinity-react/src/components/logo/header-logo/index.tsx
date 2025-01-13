@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import siteLogo from "../../../assets/images/site-logo.png";
 
-const Logo: React.FC = async () => {
+const Logo: React.FC = () => {
 
   return (
 

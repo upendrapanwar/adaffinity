@@ -7,7 +7,7 @@ import FacebookIcon32 from "../icons/FacebookIcon32";
 import loginImd from "../../assets/images/login-img.jpg";
 import userRegistrationSchema from "../../validation-schemas/userRegistrationSchema";
 import { toast } from "react-toastify";
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import axios from "axios";
 import { Register } from "../../types/register.interface";
 
@@ -32,7 +32,7 @@ const SignUp: React.FC = () => {
      * Handle after form submission
      * 
      */
-    const handleSubmit = (values: Register, { resetForm }: { resetForm: (nextState?: Partial<Register>) => void }) => {
+    const handleSubmit = (values: Register, { resetForm }: FormikHelpers<Register>) : void => {
         //navigate("/login");
         axios.post('auth/signup', values).then(response => {
             toast.dismiss();

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../logo/header-logo";
 
-const Navigation: React.FC = async () => {
+const Navigation: React.FC = () => {
 
     return (
       <nav className="navbar navbar-expand-lg justify-content-between">

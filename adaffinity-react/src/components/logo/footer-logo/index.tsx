@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import footLogo from "../../../assets/images/footer-logo.png";
 
-const FooterLogo: React.FC = async () => {
+const FooterLogo: React.FC = () => {
 
     return (
         <div className="col-lg-12 col-md-12 col-sm-12 py-3 text-center">
